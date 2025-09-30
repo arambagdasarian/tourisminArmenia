@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism Data Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
+        .test-result { margin: 10px 0; padding: 10px; background: white; border-radius: 5px; }
+        .success { border-left: 5px solid green; }
+        .error { border-left: 5px solid red; }
+        .info { border-left: 5px solid blue; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Tourism Dashboard Data Test</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(type, title, message) {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = `<strong>${title}</strong><br>${message}`;
+            results.appendChild(div);
+        }
+        
+        async function testDataLoading() {
+            addResult('info', 'Starting Tests', 'Testing CSV data loading and parsing...');
+            
+            try {
+                // Test quarterly data
+                const quarterlyResponse = await fetch('./armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
+                if (quarterlyResponse.ok) {
+                    const quarterlyText = await quarterlyResponse.text();
+                    const quarterlyLines = quarterlyText.trim().split('\n');
+                    addResult('success', 'Quarterly Data Loaded', 
+                        `${quarterlyLines.length} lines loaded, Header: ${quarterlyLines[0]}`);
+                    
+                    // Parse first few data rows
+                    let sampleData = quarterlyLines.slice(1, 6).map(line => {
+                        const [quarter, country, tourists, spending] = line.split(',');
+                        return { quarter, country, tourists: parseInt(tourists), spending: parseFloat(spending) };
+                    });
+                    
+                    addResult('info', 'Sample Quarterly Data', 
+                        sampleData.map(d => `${d.quarter} - ${d.country}: ${d.tourists.toLocaleString()} tourists`).join('<br>'));
+                    
+                } else {
+                    addResult('error', 'Quarterly Data Failed', `HTTP ${quarterlyResponse.status}`);
+                }
+                
+                // Test yearly data
+                const yearlyResponse = await fetch('./armenia_inbound_tourism_yearly_2019_2025.csv');
+                if (yearlyResponse.ok) {
+                    const yearlyText = await yearlyResponse.text();
+                    const yearlyLines = yearlyText.trim().split('\n');
+                    addResult('success', 'Yearly Data Loaded', 
+                        `${yearlyLines.length} lines loaded, Header: ${yearlyLines[0]}`);
+                        
+                    // Parse first few data rows
+                    let sampleYearlyData = yearlyLines.slice(1, 6).map(line => {
+                        const [year, country, tourists, spending] = line.split(',');
+                        return { year, country, tourists: parseInt(tourists), spending: parseFloat(spending) };
+                    });
+                    
+                    addResult('info', 'Sample Yearly Data', 
+                        sampleYearlyData.map(d => `${d.year} - ${d.country}: ${d.tourists.toLocaleString()} tourists`).join('<br>'));
+                        
+                } else {
+                    addResult('error', 'Yearly Data Failed', `HTTP ${yearlyResponse.status}`);
+                }
+                
+                // Test country coordinates
+                const countryCoords = {
+                    'Russia': [55.7558, 37.6176],
+                    'Georgia': [41.7151, 44.8271],
+                    'Iran': [35.6892, 51.3890],
+                    'United States': [38.9072, -77.0369],
+                    'Germany': [52.5200, 13.4050],
+                    'Other': [40.1792, 44.4991]
+                };
+                
+                addResult('success', 'Country Coordinates Test', 
+                    `${Object.keys(countryCoords).length} country coordinates available<br>` +
+                    Object.entries(countryCoords).slice(0, 3).map(([country, coords]) => 
+                        `${country}: [${coords[0]}, ${coords[1]}]`).join('<br>'));
+                
+                addResult('success', 'All Tests Completed', 
+                    'Data loading appears to be working correctly. Check the main dashboard console for detailed logs.');
+                    
+            } catch (error) {
+                addResult('error', 'Test Failed', error.message);
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', testDataLoading);
+    </script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <title>Armenia Tourism Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Leaflet CSS for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="tourism-dashboard.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+    <!-- Navigation Header -->
+    <header id="quarto-header" class="headroom fixed-top">
+        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+            <div class="navbar-container container-fluid">
+                <div class="navbar-brand-container mx-auto">
+                    <a href="https://teevial.com" class="navbar-brand navbar-brand-logo" target="_blank">
+                        <img src="./teevial.jpg" alt="Teevial" class="navbar-logo">
+                    </a>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+                        aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav navbar-nav-scroll me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./tourism-dashboard.html" aria-current="page">
+                                <span class="menu-text">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./data-story.html">
+                                <span class="menu-text">Data Story</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contributors.html">
+                                <span class="menu-text">Contributors</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+        <main class="content" id="quarto-document-content">
+            <!-- Title Block -->
+            <header id="title-block-header" class="quarto-title-block default">
+                <div class="quarto-title">
+                    <h1 class="title">Armenia Tourism Analytics Dashboard</h1>
+                    <p class="subtitle">Exploring Tourism Trends Across Armenian Regions</p>
+                </div>
+            </header>
+
+            <!-- Enhanced Control Panel -->
+            <div class="dashboard-controls mb-4">
+                <!-- Primary Controls Row -->
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="yearSelect" class="form-label">Year</label>
+                        <select class="form-select" id="yearSelect">
+                            <option value="2025">2025</option>
+                            <option value="2024" selected>2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="quarterSelect" class="form-label">Period</label>
+                        <select class="form-select" id="quarterSelect">
+                            <option value="ALL" selected>Whole Year</option>
+                            <option value="Q1">Q1 (Jan-Mar)</option>
+                            <option value="Q2">Q2 (Apr-Jun)</option>
+                            <option value="Q3">Q3 (Jul-Sep)</option>
+                            <option value="Q4">Q4 (Oct-Dec)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="metricSelect" class="form-label">Metric</label>
+                        <select class="form-select" id="metricSelect">
+                            <option value="tourists" selected>Tourists</option>
+                            <option value="spending">Spending</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="viewSelect" class="form-label">View Mode</label>
+                        <select class="form-select" id="viewSelect">
+                            <option value="overview">📊 Overview</option>
+                            <option value="countries" selected>Country Markers</option>
+                            <option value="flow">Flow Lines</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="regionFilter" class="form-label">Region Filter</label>
+                        <select class="form-select" id="regionFilter">
+                            <option value="all" selected>All Regions</option>
+                            <option value="europe">Europe</option>
+                            <option value="asia">Asia</option>
+                            <option value="americas">Americas</option>
+                            <option value="middle-east">Middle East</option>
+                            <option value="post-soviet">Post-Soviet</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="topCountries" class="form-label">Show Top</label>
+                        <select class="form-select" id="topCountries">
+                            <option value="all">All Countries</option>
+                            <option value="10" selected>Top 10</option>
+                            <option value="15">Top 15</option>
+                            <option value="20">Top 20</option>
+                            <option value="5">Top 5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Advanced Controls Row -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group me-2" role="group">
+                                <button class="btn btn-primary" id="updateButton">
+                                    <i class="bi bi-arrow-clockwise"></i> Update
+                                </button>
+                                <button class="btn btn-outline-primary" id="compareButton">
+                                    <i class="bi bi-bar-chart"></i> Compare
+                                </button>
+                                <button class="btn btn-outline-primary" id="trendsButton">
+                                    <i class="bi bi-graph-up"></i> Trends
+                                </button>
+                            </div>
+                            
+                            <div class="btn-group me-2" role="group">
+                                <button class="btn btn-outline-secondary" id="resetViewButton">
+                                    <i class="bi bi-arrows-fullscreen"></i> Reset View
+                                </button>
+                                <button class="btn btn-outline-secondary" id="focusArmeniaButton">
+                                    <i class="bi bi-geo-alt"></i> Focus Armenia
+                                </button>
+                                <button class="btn btn-outline-secondary" id="fullscreenButton">
+                                    <i class="bi bi-fullscreen"></i> Fullscreen
+                                </button>
+                            </div>
+
+                            <div class="btn-group me-2" role="group">
+                                <button class="btn btn-outline-success" id="exportDataButton">
+                                    <i class="bi bi-download"></i> Export
+                                </button>
+                                <button class="btn btn-outline-info" id="shareButton">
+                                    <i class="bi bi-share"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-end h-100">
+                            <div class="form-check form-switch me-3">
+                                <input class="form-check-input" type="checkbox" id="showConnections" checked>
+                                <label class="form-check-label" for="showConnections">
+                                    Connection Lines
+                                </label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="showLabels">
+                                <label class="form-check-label" for="showLabels">
+                                    Labels
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview Panel (hidden by default) -->
+            <div id="overviewPanel" class="overview-panel" style="display: none;">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h4><i class="bi bi-graph-up"></i> Armenia Tourism Overview (2019-2025)</h4>
+                        <p class="text-muted">Comprehensive analysis across all years and quarters</p>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="overview-stat-card">
+                            <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                            <div class="stat-content">
+                                <h3 id="overviewTotalTourists">Loading...</h3>
+                                <p>Total Tourists</p>
+                                <span class="stat-period">2019-2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="overview-stat-card">
+                            <div class="stat-icon"><i class="bi bi-currency-dollar"></i></div>
+                            <div class="stat-content">
+                                <h3 id="overviewTotalSpending">Loading...</h3>
+                                <p>Total Spending</p>
+                                <span class="stat-period">USD Millions</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="overview-stat-card">
+                            <div class="stat-icon"><i class="bi bi-flag"></i></div>
+                            <div class="stat-content">
+                                <h3 id="overviewCountries">Loading...</h3>
+                                <p>Source Countries</p>
+                                <span class="stat-period">Unique origins</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="overview-stat-card">
+                            <div class="stat-icon"><i class="bi bi-calendar-range"></i></div>
+                            <div class="stat-content">
+                                <h3 id="overviewQuarters">Loading...</h3>
+                                <p>Data Quarters</p>
+                                <span class="stat-period">Time periods</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="chart-panel">
+                            <h5>Tourism Trends Over Time</h5>
+                            <div class="chart-controls mb-2">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <input type="radio" class="btn-check" name="overviewChart" id="chartTourists" checked>
+                                    <label class="btn btn-outline-primary" for="chartTourists">Tourists</label>
+                                    
+                                    <input type="radio" class="btn-check" name="overviewChart" id="chartSpending">
+                                    <label class="btn btn-outline-primary" for="chartSpending">Spending</label>
+                                    
+                                    <input type="radio" class="btn-check" name="overviewChart" id="chartBoth">
+                                    <label class="btn btn-outline-primary" for="chartBoth">Combined</label>
+                                </div>
+                            </div>
+                            <canvas id="overviewChart" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-panel">
+                            <h5>Top Countries (All Time)</h5>
+                            <canvas id="topCountriesChart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="insight-panel">
+                            <h5><i class="bi bi-lightbulb"></i> Key Insights</h5>
+                            <div id="overviewInsights">
+                                <div class="loading-spinner">Analyzing data...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="insight-panel">
+                            <h5><i class="bi bi-graph-down-arrow"></i> Seasonal Patterns</h5>
+                            <canvas id="seasonalChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="overview-actions">
+                            <button class="btn btn-primary me-2" onclick="switchToDetailView()">
+                                <i class="bi bi-zoom-in"></i> Explore Specific Period
+                            </button>
+                            <button class="btn btn-outline-secondary me-2" onclick="exportOverviewData()">
+                                <i class="bi bi-download"></i> Export Overview Data
+                            </button>
+                            <button class="btn btn-outline-info" onclick="shareOverview()">
+                                <i class="bi bi-share"></i> Share Overview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Container -->
+            <div id="mapContainer" class="map-container">
+                <div id="map"></div>
+                
+                <!-- Map Legend -->
+                <div class="map-legend">
+                    <h6><i class="bi bi-info-circle"></i> Legend</h6>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2E8B57;"></div>
+                        <span>High</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FFD700;"></div>
+                        <span>Medium</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FF6B47;"></div>
+                        <span>Low</span>
+                    </div>
+                </div>
+
+                <!-- Enhanced Statistics Panel -->
+                <div class="statistics-panel">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6><i class="bi bi-graph-up"></i> <span id="statsTitle">Quarterly Statistics</span></h6>
+                        <button class="btn btn-sm btn-outline-secondary" id="toggleStats">
+                            <i class="bi bi-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div id="statsContent">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Tourists:</span>
+                            <span class="stat-value" id="totalVisitors">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Spending:</span>
+                            <span class="stat-value" id="totalSpending">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Avg Per Tourist:</span>
+                            <span class="stat-value" id="avgSpending">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Top Origin:</span>
+                            <span class="stat-value" id="topCountry">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Countries:</span>
+                            <span class="stat-value" id="countryCount">Loading...</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Growth Rate:</span>
+                            <span class="stat-value" id="growthRate">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Countries Panel -->
+                <div class="top-countries-panel">
+                    <h6><i class="bi bi-list-ol"></i> Top Countries</h6>
+                    <div id="topCountriesList">
+                        <div class="loading-spinner">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Insights -->
+            <div class="insights-section mt-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <h5><i class="bi bi-trophy"></i> Leading Source Markets</h5>
+                            <p>Russia dominates Armenia's inbound tourism with over 700k yearly visitors, followed by Georgia and Iran. Russia accounts for approximately 35% of all tourist arrivals.</p>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <h5><i class="bi bi-graph-up-arrow"></i> Tourism Recovery</h5>
+                            <p>After the 2020 pandemic low of 369k tourists, Armenia has shown strong recovery, peaking at 2.29M visitors in 2023 - exceeding pre-pandemic levels.</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <h5><i class="bi bi-currency-dollar"></i> Economic Impact</h5>
+                            <p>Tourism spending reached $2.6B in 2023, with average spending of $1,140 per tourist. Western European and American visitors show highest per-capita spending.</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Comparison Modal -->
+    <div class="modal fade" id="comparisonModal" tabindex="-1" aria-labelledby="comparisonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comparisonModalLabel">
+                        <i class="bi bi-bar-chart"></i> Tourism Comparison Analysis
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Compare Countries</h6>
+                            <select class="form-select mb-3" id="compareCountries" multiple>
+                                <!-- Countries will be populated here -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Compare Periods</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>From:</label>
+                                    <select class="form-select" id="compareFromPeriod"></select>
+                                </div>
+                                <div class="col-6">
+                                    <label>To:</label>
+                                    <select class="form-select" id="compareToPeriod"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <canvas id="comparisonChart" width="800" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="generateComparison">Generate Comparison</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trends Modal -->
+    <div class="modal fade" id="trendsModal" tabindex="-1" aria-labelledby="trendsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trendsModalLabel">
+                        <i class="bi bi-graph-up"></i> Tourism Trends Analysis
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label>Country:</label>
+                            <select class="form-select" id="trendCountry"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Metric:</label>
+                            <select class="form-select" id="trendMetric">
+                                <option value="tourists">Tourists</option>
+                                <option value="spending">Spending</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Time Range:</label>
+                            <select class="form-select" id="trendRange">
+                                <option value="all">All Available</option>
+                                <option value="recent">Last 2 Years</option>
+                                <option value="yearly">By Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <canvas id="trendsChart" width="800" height="400"></canvas>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="trend-insights" id="trendInsights">
+                                <!-- Insights will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="generateTrends">Generate Trends</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Country Detail Modal -->
+    <div class="modal fade" id="countryDetailModal" tabindex="-1" aria-labelledby="countryDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="countryDetailModalLabel">
+                        <span id="countryFlag"></span>
+                        <span id="countryName">Country Details</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="detail-stat-card">
+                                <h6><i class="bi bi-people"></i> Tourist Statistics</h6>
+                                <div class="detail-stat">
+                                    <span>Current Quarter:</span>
+                                    <strong id="detailCurrentTourists">-</strong>
+                                </div>
+                                <div class="detail-stat">
+                                    <span>Previous Quarter:</span>
+                                    <strong id="detailPreviousTourists">-</strong>
+                                </div>
+                                <div class="detail-stat">
+                                    <span>YoY Growth:</span>
+                                    <strong id="detailTouristGrowth">-</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-stat-card">
+                                <h6><i class="bi bi-currency-dollar"></i> Spending Statistics</h6>
+                                <div class="detail-stat">
+                                    <span>Current Quarter:</span>
+                                    <strong id="detailCurrentSpending">-</strong>
+                                </div>
+                                <div class="detail-stat">
+                                    <span>Previous Quarter:</span>
+                                    <strong id="detailPreviousSpending">-</strong>
+                                </div>
+                                <div class="detail-stat">
+                                    <span>Per Tourist:</span>
+                                    <strong id="detailPerTourist">-</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <canvas id="countryChart" width="500" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="country-insights" id="countryInsights">
+                                <!-- Country-specific insights will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" id="addToComparison">Add to Comparison</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="tourism-dashboard.js"></script>
+</body>
+</html>

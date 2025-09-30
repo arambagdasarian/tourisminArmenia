@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #map { height: 400px; border: 2px solid #ccc; margin: 20px 0; }
+        .test-info { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; background: #000064; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #results { background: white; border: 1px solid #ccc; padding: 10px; margin: 10px 0; height: 200px; overflow-y: scroll; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>🗺️ Map Test</h1>
+    
+    <div class="test-info">
+        <strong>Purpose:</strong> Test if the map can display markers from the tourism data.
+    </div>
+    
+    <div id="map"></div>
+    
+    <div>
+        <button onclick="testBasicMap()">Test Basic Map</button>
+        <button onclick="testDataLoad()">Test Data Loading</button>
+        <button onclick="testMarkers()">Test Markers</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let results = document.getElementById('results');
+        
+        function log(message) {
+            results.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            results.scrollTop = results.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearResults() {
+            results.innerHTML = '';
+        }
+        
+        function testBasicMap() {
+            log('Testing basic map initialization...');
+            try {
+                if (map) {
+                    map.remove();
+                }
+                
+                map = L.map('map').setView([45, 25], 3);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+                
+                log('✅ Basic map initialized successfully');
+                
+                // Add a test marker
+                const testMarker = L.marker([40.1792, 44.4991]).addTo(map);
+                testMarker.bindPopup('<b>Armenia Test Marker</b>').openPopup();
+                log('✅ Test marker added at Armenia coordinates');
+                
+            } catch (error) {
+                log('❌ Basic map test failed: ' + error.message);
+            }
+        }
+        
+        async function testDataLoad() {
+            log('Testing data loading...');
+            try {
+                // Test yearly data
+                const response = await fetch('./armenia_inbound_tourism_yearly_2019_2025.csv');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                const lines = csvText.trim().split('\n');
+                log(`✅ Loaded ${lines.length} lines from yearly data`);
+                
+                // Parse first few countries for 2024
+                const data2024 = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const [year, country, tourists, spending] = lines[i].split(',');
+                    if (year === '2024') {
+                        data2024.push({
+                            country,
+                            tourists: parseInt(tourists),
+                            spending: parseFloat(spending)
+                        });
+                    }
+                }
+                
+                log(`✅ Found ${data2024.length} countries for 2024`);
+                log('Top 5 countries: ' + data2024.slice(0, 5).map(d => 
+                    `${d.country}(${d.tourists.toLocaleString()})`).join(', '));
+                
+                return data2024;
+                
+            } catch (error) {
+                log('❌ Data loading failed: ' + error.message);
+                return [];
+            }
+        }
+        
+        async function testMarkers() {
+            log('Testing marker placement...');
+            
+            if (!map) {
+                log('❌ Map not initialized, running basic map test first...');
+                testBasicMap();
+            }
+            
+            const data = await testDataLoad();
+            if (data.length === 0) {
+                log('❌ No data to create markers');
+                return;
+            }
+            
+            // Country coordinates
+            const coords = {
+                'Russia': [55.7558, 37.6176],
+                'Georgia': [41.7151, 44.8271],
+                'Iran': [35.6892, 51.3890],
+                'United States': [38.9072, -77.0369],
+                'Germany': [52.5200, 13.4050],
+                'Other': [40.1792, 44.4991]
+            };
+            
+            let markersAdded = 0;
+            const top10 = data.slice(0, 10);
+            
+            for (const countryData of top10) {
+                const countryCoords = coords[countryData.country];
+                if (countryCoords) {
+                    try {
+                        // Create marker
+                        const marker = L.circleMarker(countryCoords, {
+                            radius: Math.min(20, Math.max(5, countryData.tourists / 50000)),
+                            fillColor: '#000064',
+                            color: '#fff',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(map);
+                        
+                        marker.bindPopup(`
+                            <strong>${countryData.country}</strong><br>
+                            Tourists: ${countryData.tourists.toLocaleString()}<br>
+                            Spending: $${(countryData.spending / 1000000).toFixed(1)}M
+                        `);
+                        
+                        markersAdded++;
+                        
+                        // Add connection line to Armenia
+                        const armeniaCoords = [40.1792, 44.4991];
+                        L.polyline([countryCoords, armeniaCoords], {
+                            color: '#000064',
+                            weight: 2,
+                            opacity: 0.6
+                        }).addTo(map);
+                        
+                    } catch (error) {
+                        log(`❌ Failed to add marker for ${countryData.country}: ${error.message}`);
+                    }
+                } else {
+                    log(`⚠️ No coordinates found for ${countryData.country}`);
+                }
+            }
+            
+            log(`✅ Added ${markersAdded} markers to the map`);
+        }
+        
+        // Initialize basic map on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Page loaded, ready for testing');
+            testBasicMap();
+        });
+    </script>
+</body>
+</html>

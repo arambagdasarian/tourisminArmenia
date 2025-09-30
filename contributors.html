@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <title>Contributors - Armenia Tourism Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="tourism-dashboard.css">
+    
+    <style>
+        .contributor-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #000064;
+        }
+        
+        .contributor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #000064, #4dabf7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .contributor-info {
+            flex-grow: 1;
+        }
+        
+        .contributor-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #000064;
+            margin-bottom: 0.25rem;
+        }
+        
+        .contributor-role {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contributor-description {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .placeholder-contributors {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .placeholder-contributors i {
+            font-size: 4rem;
+            color: #dee2e6;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body class="nav-fixed fullcontent">
+    <!-- Navigation Header -->
+    <header id="quarto-header" class="headroom fixed-top">
+        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+            <div class="navbar-container container-fluid">
+                <div class="navbar-brand-container mx-auto">
+                    <a href="https://teevial.com" class="navbar-brand navbar-brand-logo" target="_blank">
+                        <img src="./teevial.jpg" alt="Teevial" class="navbar-logo">
+                    </a>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+                        aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav navbar-nav-scroll me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./tourism-dashboard.html">
+                                <span class="menu-text">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./data-story.html">
+                                <span class="menu-text">Data Story</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./contributors.html" aria-current="page">
+                                <span class="menu-text">Contributors</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+        <main class="content" id="quarto-document-content">
+            <!-- Title Block -->
+            <header id="title-block-header" class="quarto-title-block default">
+                <div class="quarto-title">
+                    <h1 class="title">Contributors</h1>
+                    <p class="subtitle">The team behind Armenia's tourism data analysis</p>
+                </div>
+            </header>
+
+            <!-- Contributors List -->
+            <div class="contributors-section">
+                <div class="placeholder-contributors">
+                    <i class="bi bi-people-fill"></i>
+                    <h4>Contributors Coming Soon</h4>
+                    <p>This section will list all the team members who contributed to the Armenia tourism data analysis project.</p>
+                </div>
+            </div>
+
+            <!-- Project Acknowledgments -->
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <h5><i class="bi bi-award"></i> Data Sources</h5>
+                        <p>Acknowledge the organizations and institutions that provided the tourism data used in this analysis.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <h5><i class="bi bi-tools"></i> Technology</h5>
+                        <p>Built with modern web technologies including Leaflet.js for mapping, Bootstrap for styling, and D3.js for visualizations.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <h5><i class="bi bi-heart"></i> Special Thanks</h5>
+                        <p>Recognition for additional support, mentorship, or resources that made this project possible.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
