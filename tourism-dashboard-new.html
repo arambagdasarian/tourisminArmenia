@@ -64,9 +64,6 @@
     <!-- Main Content -->
     <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
         <main class="content" id="quarto-document-content">
-            
-            <!-- Dashboard View -->
-            <div id="dashboardView" style="display: block;">
             <!-- Title Block -->
             <header id="title-block-header" class="quarto-title-block default">
                 <div class="quarto-title">
@@ -122,11 +119,11 @@
                     <div class="col-md-2">
                         <label for="topCountries" class="form-label">Show Top</label>
                         <select class="form-select" id="topCountries">
-                            <option value="5" selected>Top 5</option>
+                            <option value="all" selected>All Countries</option>
                             <option value="10">Top 10</option>
                             <option value="15">Top 15</option>
                             <option value="20">Top 20</option>
-                            <option value="all">All Countries</option>
+                            <option value="5">Top 5</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -187,19 +184,15 @@
                     <h6><i class="bi bi-info-circle"></i> Legend</h6>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #2E8B57;"></div>
-                        <span>High (&gt;100K)</span>
+                        <span>High</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #FFD700;"></div>
-                        <span>Medium (50K-100K)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #FFA500;"></div>
-                        <span>Low (10K-50K)</span>
+                        <span>Medium</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #FF6B47;"></div>
-                        <span>Very Low (&lt;10K)</span>
+                        <span>Low</span>
                     </div>
                 </div>
 
@@ -282,79 +275,6 @@
                 </div>
             </div>
         </main>
-    </div>
-
-    <!-- Country Detail Modal -->
-    <div class="modal fade" id="countryDetailModal" tabindex="-1" aria-labelledby="countryDetailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="countryDetailModalLabel">
-                        <span id="countryDetailName">Country Details</span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="detail-stat-card">
-                                <h6><i class="bi bi-people"></i> Current Period Statistics</h6>
-                                <div class="detail-stat">
-                                    <span>Tourists:</span>
-                                    <strong id="detailTourists">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>Total Spending:</span>
-                                    <strong id="detailSpending">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>Avg Per Tourist:</span>
-                                    <strong id="detailAvgSpending">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>% of Total:</span>
-                                    <strong id="detailPercentage">-</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="detail-stat-card">
-                                <h6><i class="bi bi-graph-up"></i> Year-over-Year Comparison</h6>
-                                <div class="detail-stat">
-                                    <span>Current Year:</span>
-                                    <strong id="detailCurrentYear">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>Previous Year:</span>
-                                    <strong id="detailPreviousYear">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>YoY Growth:</span>
-                                    <strong id="detailGrowth">-</strong>
-                                </div>
-                                <div class="detail-stat">
-                                    <span>Ranking:</span>
-                                    <strong id="detailRanking">-</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <div class="detail-stat-card">
-                                <h6><i class="bi bi-calendar"></i> Historical Data</h6>
-                                <div id="countryHistoricalData">
-                                    <div class="loading-spinner">Loading historical data...</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Scripts -->

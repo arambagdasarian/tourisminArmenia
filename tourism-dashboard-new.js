@@ -22,7 +22,7 @@ let currentQuarter = 'ALL';
 let currentMetric = 'tourists';
 let currentView = 'flow';
 let currentRegionFilter = 'all';
-let currentTopCountries = '5';
+let currentTopCountries = 'all';
 let showConnections = true;
 let showLabels = false;
 
@@ -43,7 +43,7 @@ const regionCategories = {
     'americas': ['United States', 'Canada'],
     'middle-east': ['Iran', 'Israel', 'Lebanon', 'UAE', 'Qatar', 'Kuwait', 'Saudi Arabia', 'Iraq'],
     'post-soviet': ['Russia', 'Georgia', 'Kazakhstan', 'Belarus', 'Ukraine', 'Uzbekistan', 
-                    'Kyrgyzstan', 'Tajikistan']
+                    'Kyrgyzstan', 'Tajikistan', 'Armenian Diaspora (non-resident)']
 };
 
 // ============================================================================
@@ -89,6 +89,7 @@ const countryCoordinates = {
     'Uzbekistan': [41.3775, 64.5853],
     'Kyrgyzstan': [42.8746, 74.5698],
     'Tajikistan': [38.5598, 68.7870],
+    'Armenian Diaspora (non-resident)': ARMENIA_COORDS,
     'Other': ARMENIA_COORDS
 };
 
@@ -117,8 +118,8 @@ async function loadQuarterlyData() {
                 const tourists = parseInt(values[2]);
                 const spending = parseFloat(values[3]);
                 
-                // Skip Azerbaijan, Turkey, and Armenian Diaspora
-                if (country === 'Azerbaijan' || country === 'Turkey' || country === 'Armenian Diaspora (non-resident)') continue;
+                // Skip Azerbaijan and Turkey
+                if (country === 'Azerbaijan' || country === 'Turkey') continue;
                 
                 const [year, q] = quarter.split('-');
                 
@@ -162,8 +163,8 @@ async function loadYearlyData() {
                 const tourists = parseInt(values[2]);
                 const spending = parseFloat(values[3]);
                 
-                // Skip Azerbaijan, Turkey, and Armenian Diaspora
-                if (country === 'Azerbaijan' || country === 'Turkey' || country === 'Armenian Diaspora (non-resident)') continue;
+                // Skip Azerbaijan and Turkey
+                if (country === 'Azerbaijan' || country === 'Turkey') continue;
                 
                 if (!yearlyTourismData[year]) yearlyTourismData[year] = {};
                 
@@ -273,13 +274,13 @@ function initMap() {
     
     try {
         map = L.map('map').setView([45, 25], 3);
-
+        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors',
             maxZoom: 18,
             minZoom: 2
         }).addTo(map);
-
+        
         console.log('✅ Map initialized successfully');
     } catch (error) {
         console.error('❌ Error initializing map:', error);
@@ -347,7 +348,7 @@ function updateMapData() {
     console.log(`🗺️ Updating map: ${currentYear} ${currentQuarter} ${currentMetric}`);
     
     clearAllLayers();
-
+    
     const periodData = getCurrentPeriodData();
     
     if (!periodData || Object.keys(periodData).length === 0) {
@@ -355,12 +356,12 @@ function updateMapData() {
         showNoDataMessage();
         return;
     }
-
+    
     const topCountries = getTopCountries(periodData);
     updateTopCountriesPanel(topCountries);
     
     // Always render flow view
-            renderFlowView(periodData, topCountries);
+    renderFlowView(periodData, topCountries);
     
     addArmeniaMarker();
     updateStatistics();
@@ -370,7 +371,6 @@ function clearAllLayers() {
     Object.values(countryLayers).forEach(layer => {
         if (layer.marker && map.hasLayer(layer.marker)) map.removeLayer(layer.marker);
         if (layer.line && map.hasLayer(layer.line)) map.removeLayer(layer.line);
-        if (layer.label && map.hasLayer(layer.label)) map.removeLayer(layer.label);
     });
     countryLayers = {};
 }
@@ -392,26 +392,23 @@ function renderFlowView(quarterData, topCountries) {
             if (!countryLayers[country]) countryLayers[country] = {};
             countryLayers[country].line = line;
         }
-            
-            // Create marker
+        
+        // Create marker
         const marker = L.circleMarker(data.coordinates, {
             radius: Math.max(5, size / 3),
-                fillColor: color,
-                color: '#ffffff',
-                weight: 2,
+            fillColor: color,
+            color: '#ffffff',
+            weight: 2,
             opacity: 1,
             fillOpacity: 0.8
         }).addTo(map);
         
-            marker.bindPopup(createPopupContent(country, data, currentMetric));
-            
-        // Add click event to show details
-        marker.on('click', () => showCountryDetails(country));
-            
+        marker.bindPopup(createPopupContent(country, data, currentMetric));
+        
         if (showLabels) {
             const label = L.marker(data.coordinates, {
-                    icon: L.divIcon({
-                        className: 'country-label',
+                icon: L.divIcon({
+                    className: 'country-label',
                     html: `<div style="background: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold; white-space: nowrap;">${country}</div>`,
                     iconSize: [100, 20]
                 })
@@ -429,7 +426,7 @@ function renderFlowView(quarterData, topCountries) {
 function addArmeniaMarker() {
     const armeniaIcon = L.divIcon({
         html: '<div style="background-color: #000064; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">🇦🇲</div>',
-            className: 'armenia-marker',
+        className: 'armenia-marker',
         iconSize: [30, 30],
         iconAnchor: [15, 15]
     });
@@ -488,8 +485,8 @@ function createPopupContent(country, data, metric) {
             <div style="display: flex; justify-content: space-between; margin: 4px 0;">
                 <span>Avg/Tourist:</span>
                 <strong style="color: #000064;">$${Math.round(data.spending / data.tourists).toLocaleString()}</strong>
-        </div>
             </div>
+        </div>
     `;
 }
 
@@ -546,11 +543,11 @@ function updateTopCountriesPanel(topCountries) {
     }
     
     panel.innerHTML = topCountries.map(([country, data], index) => `
-            <div class="country-item">
-                <span class="country-rank">${index + 1}</span>
-                <span class="country-name">${country}</span>
+        <div class="country-item">
+            <span class="country-rank">${index + 1}</span>
+            <span class="country-name">${country}</span>
             <span class="country-value">${data[currentMetric].toLocaleString()}</span>
-            </div>
+        </div>
     `).join('');
 }
 
@@ -660,9 +657,9 @@ function handleControlChange() {
 function exportData() {
     const periodData = getCurrentPeriodData();
     const exportData = {
-                year: currentYear,
-                quarter: currentQuarter,
-                metric: currentMetric,
+        year: currentYear,
+        quarter: currentQuarter,
+        metric: currentMetric,
         data: Object.entries(periodData).map(([country, data]) => ({
             country,
             tourists: data.tourists,
@@ -688,112 +685,10 @@ function shareData() {
             text: `Tourism data for ${currentYear} ${currentQuarter}`,
             url: url
         });
-        } else {
+    } else {
         navigator.clipboard.writeText(url);
         alert('Link copied to clipboard!');
     }
-}
-
-function showCountryDetails(country) {
-    console.log('🔍 Showing details for:', country);
-    
-    const periodData = getCurrentPeriodData();
-    const countryData = periodData[country];
-    
-    if (!countryData) {
-        console.warn('No data for country:', country);
-        return;
-    }
-    
-    // Set country name
-    document.getElementById('countryDetailName').textContent = `🌍 ${country}`;
-    
-    // Current period statistics
-    document.getElementById('detailTourists').textContent = countryData.tourists.toLocaleString();
-    document.getElementById('detailSpending').textContent = `$${(countryData.spending / 1000000).toFixed(2)}M`;
-    
-    const avgSpending = countryData.spending / countryData.tourists;
-    document.getElementById('detailAvgSpending').textContent = `$${Math.round(avgSpending).toLocaleString()}`;
-    
-    const totalTourists = Object.values(periodData).reduce((sum, c) => sum + c.tourists, 0);
-    const percentage = ((countryData.tourists / totalTourists) * 100).toFixed(1);
-    document.getElementById('detailPercentage').textContent = `${percentage}%`;
-    
-    // Year-over-year comparison
-    const previousYear = (parseInt(currentYear) - 1).toString();
-    let currentYearData = 0, previousYearData = 0;
-    
-    if (currentQuarter === 'ALL') {
-        currentYearData = yearlyTourismData[currentYear]?.[country]?.tourists || 0;
-        previousYearData = yearlyTourismData[previousYear]?.[country]?.tourists || 0;
-    } else {
-        currentYearData = tourismData[currentYear]?.[currentQuarter]?.[country]?.tourists || 0;
-        previousYearData = tourismData[previousYear]?.[currentQuarter]?.[country]?.tourists || 0;
-    }
-    
-    document.getElementById('detailCurrentYear').textContent = currentYearData.toLocaleString();
-    document.getElementById('detailPreviousYear').textContent = previousYearData.toLocaleString();
-    
-    if (previousYearData > 0) {
-        const growth = ((currentYearData - previousYearData) / previousYearData) * 100;
-        const growthEl = document.getElementById('detailGrowth');
-        growthEl.textContent = `${growth > 0 ? '+' : ''}${growth.toFixed(1)}%`;
-        growthEl.className = growth > 0 ? 'text-success' : 'text-danger';
-    } else {
-        document.getElementById('detailGrowth').textContent = 'N/A';
-    }
-    
-    // Ranking
-    const sortedCountries = Object.entries(periodData).sort(([,a], [,b]) => b.tourists - a.tourists);
-    const rank = sortedCountries.findIndex(([c]) => c === country) + 1;
-    document.getElementById('detailRanking').textContent = `#${rank} of ${sortedCountries.length}`;
-    
-    // Historical data
-    const historicalHTML = generateHistoricalData(country);
-    document.getElementById('countryHistoricalData').innerHTML = historicalHTML;
-    
-    // Show modal
-    const modal = new bootstrap.Modal(document.getElementById('countryDetailModal'));
-    modal.show();
-}
-
-function generateHistoricalData(country) {
-    const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
-    const historicalData = years.map(year => {
-        const data = yearlyTourismData[year]?.[country];
-        return {
-            year,
-            tourists: data?.tourists || 0,
-            spending: data?.spending || 0
-        };
-    }).filter(d => d.tourists > 0);
-    
-    if (historicalData.length === 0) {
-        return '<p class="text-muted">No historical data available</p>';
-    }
-    
-    return `
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Tourists</th>
-                    <th>Spending</th>
-                    <th>Avg/Tourist</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${historicalData.map(d => `
-                    <tr>
-                        <td><strong>${d.year}</strong></td>
-                        <td>${d.tourists.toLocaleString()}</td>
-                        <td>$${(d.spending / 1000000).toFixed(2)}M</td>
-                        <td>$${Math.round(d.spending / d.tourists).toLocaleString()}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
 }
 
 // ============================================================================
@@ -804,7 +699,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('🚀 DOM loaded, starting initialization...');
     
     try {
-    initMap();
+        initMap();
         
         await new Promise(resolve => setTimeout(resolve, 500));
         
@@ -819,7 +714,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         if (dataLoaded) {
             console.log('✅ Real data loaded successfully');
-            } else {
+        } else {
             console.log('✅ Using sample data');
         }
     } catch (error) {

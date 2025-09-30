@@ -1,0 +1,888 @@
+/* Tourism Dashboard CSS - Matching Teevial Website Style */
+
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif;
+}
+
+/* Armenian text styling */
+.armenian-text {
+    font-family: 'Noto Sans Armenian', sans-serif;
+}
+
+/* Navbar Styling - Matching Original */
+.navbar {
+    background-color: #000064 !important; /* Same dark blue as original */
+    padding: 0.5rem 1rem;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: #cccccc !important;
+}
+
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+}
+
+/* Title Block Styling - Clean without background logo */
+.quarto-title-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+}
+
+.title {
+    font-family: 'Noto Sans Armenian', sans-serif;
+    color: #000064;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+/* Dashboard Controls */
+.dashboard-controls {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 1rem;
+}
+
+.dashboard-controls .form-label {
+    font-weight: 600;
+    color: #000064;
+    margin-bottom: 0.5rem;
+}
+
+.form-select, .btn-primary {
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: #000064;
+    border-color: #000064;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #000050;
+    border-color: #000050;
+}
+
+/* Map Container */
+.map-container {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    margin: 2rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #f0f0f0;
+    min-height: 400px;
+}
+
+/* Map Legend */
+.map-legend {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.map-legend h6 {
+    margin: 0 0 10px 0;
+    color: #000064;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+}
+
+.legend-item span {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Statistics Panel */
+.statistics-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 250px;
+}
+
+.statistics-panel h6 {
+    margin: 0 0 12px 0;
+    color: #000064;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.stat-label {
+    color: #555;
+    font-family: 'Noto Sans Armenian', sans-serif;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #000064;
+}
+
+.stat-value.text-success {
+    color: #28a745 !important;
+}
+
+/* Insights Section */
+.insights-section {
+    margin: 2rem 0;
+}
+
+.insight-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    border-left: 4px solid #000064;
+}
+
+.insight-card h5 {
+    color: #000064;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.insight-card h5 i {
+    margin-right: 8px;
+    color: #000064;
+}
+
+.insight-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-family: 'Noto Sans Armenian', sans-serif;
+}
+
+.progress {
+    height: 6px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: #000064;
+    transition: width 0.6s ease;
+}
+
+.progress-bar.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.progress-bar.bg-success {
+    background-color: #28a745 !important;
+}
+
+/* Content Layout */
+.quarto-container {
+    padding-top: 80px; /* Account for fixed navbar */
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-container {
+        height: 50vh;
+        min-height: 350px;
+    }
+    
+    .map-legend, .statistics-panel {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin: 1rem 0;
+        width: 100%;
+    }
+    
+    .dashboard-controls .col-md-3 {
+        margin-bottom: 1rem;
+    }
+    
+    .insight-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .quarto-title-block {
+        background-size: 200px;
+        padding-left: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .map-container {
+        height: 40vh;
+        min-height: 300px;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .dashboard-controls {
+        padding: 1rem;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: #000064;
+}
+
+.loading::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000064;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Map Popup Styling */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.4;
+}
+
+.leaflet-popup h6 {
+    color: #000064;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.leaflet-popup .popup-stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    font-size: 0.85rem;
+}
+
+.leaflet-popup .popup-stat strong {
+    color: #000064;
+}
+
+/* Enhanced Top Countries Panel */
+.top-countries-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.top-countries-panel h6 {
+    margin: 0 0 10px 0;
+    color: #000064;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.country-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+
+.country-item:last-child {
+    border-bottom: none;
+}
+
+.country-rank {
+    font-weight: bold;
+    color: #000064;
+    width: 20px;
+}
+
+.country-name {
+    flex-grow: 1;
+    margin-left: 8px;
+    color: #333;
+}
+
+.country-value {
+    font-weight: 600;
+    color: #555;
+}
+
+/* Enhanced Statistics Panel */
+.statistics-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 280px;
+    transition: all 0.3s ease;
+}
+
+.statistics-panel.collapsed #statsContent {
+    display: none;
+}
+
+#toggleStats {
+    border: none;
+    background: none;
+    font-size: 0.8rem;
+    padding: 2px 5px;
+}
+
+/* Modal Enhancements */
+.modal-xl {
+    max-width: 95%;
+}
+
+.detail-stat-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.detail-stat-card h6 {
+    color: #000064;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.detail-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.detail-stat span {
+    color: #666;
+}
+
+.detail-stat strong {
+    color: #000064;
+    font-weight: 600;
+}
+
+/* Trend and Comparison Insights */
+.trend-insights, .country-insights {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.insight-item {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+}
+
+.insight-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.insight-title {
+    font-weight: 600;
+    color: #000064;
+    margin-bottom: 0.25rem;
+}
+
+.insight-text {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Enhanced Controls */
+.btn-toolbar .btn-group {
+    margin-right: 0.5rem;
+}
+
+.form-check-label {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Loading States */
+.loading-spinner {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 1rem;
+}
+
+/* Animated Markers */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animated-marker {
+    animation: pulse 2s infinite;
+}
+
+/* Map Fullscreen */
+.map-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    border-radius: 0 !important;
+    background: white !important;
+    box-shadow: none !important;
+}
+
+.map-fullscreen #map {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.map-fullscreen .map-legend {
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 10000 !important;
+}
+
+.map-fullscreen .statistics-panel {
+    bottom: 20px !important;
+    left: 20px !important;
+    z-index: 10000 !important;
+}
+
+.map-fullscreen .top-countries-panel {
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 10000 !important;
+}
+
+/* Fullscreen exit button */
+.map-fullscreen::before {
+    content: '';
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,100,0.8);
+    border-radius: 50%;
+    z-index: 10001;
+    cursor: pointer;
+}
+
+/* Enhanced Heatmap Controls */
+.heatmap-controls {
+    position: absolute;
+    top: 20px;
+    right: 200px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.heatmap-controls label {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.heatmap-controls input[type="range"] {
+    width: 100px;
+}
+
+/* Responsive Modal Improvements */
+@media (max-width: 768px) {
+    .modal-xl {
+        max-width: 95%;
+        margin: 0.5rem;
+    }
+    
+    .detail-stat-card {
+        margin-bottom: 0.75rem;
+    }
+    
+    .statistics-panel,
+    .top-countries-panel,
+    .map-legend {
+        position: relative;
+        margin: 1rem 0;
+        width: 100%;
+    }
+}
+
+/* Country Flag Icons */
+.country-flag {
+    width: 20px;
+    height: 15px;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Export/Share Buttons */
+.btn-outline-success:hover {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000064;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #000050;
+}
+
+/* Chart Container Styling */
+.chart-container {
+    position: relative;
+    height: 400px;
+    margin: 1rem 0;
+}
+
+/* Flow Lines Animation */
+@keyframes flowAnimation {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.flow-line {
+    stroke-dasharray: 10, 5;
+    animation: flowAnimation 3s linear infinite;
+}
+
+/* Overview Panel Styles */
+.overview-panel {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.overview-stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #000064;
+    margin-bottom: 1rem;
+}
+
+.overview-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    color: #000064;
+    margin-bottom: 0.5rem;
+}
+
+.stat-content h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000064;
+    margin: 0.5rem 0 0.25rem 0;
+}
+
+.stat-content p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+}
+
+.stat-period {
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+}
+
+.chart-panel {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.chart-panel h5 {
+    color: #000064;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.chart-controls {
+    margin-bottom: 1rem;
+}
+
+.chart-controls .btn-group {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.insight-panel {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.insight-panel h5 {
+    color: #000064;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.overview-actions {
+    text-align: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+
+/* Overview Insights */
+.overview-insight {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #000064;
+}
+
+.insight-metric {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000064;
+    margin-bottom: 0.5rem;
+}
+
+.insight-description {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.trend-indicator {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.trend-up {
+    color: #28a745;
+}
+
+.trend-down {
+    color: #dc3545;
+}
+
+.trend-stable {
+    color: #6c757d;
+}
+
+/* Overview Mode Toggle */
+.overview-mode-active .dashboard-controls {
+    background: #e7f3ff;
+    border: 2px solid #000064;
+}
+
+.overview-mode-active #viewSelect {
+    background: #000064;
+    color: white;
+    border-color: #000064;
+}
+
+/* Seasonal Chart Styling */
+.seasonal-bar {
+    transition: all 0.3s ease;
+}
+
+.seasonal-bar:hover {
+    opacity: 0.8;
+    transform: scaleY(1.1);
+}
+
+/* Overview Panel Responsive */
+@media (max-width: 768px) {
+    .overview-panel {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .overview-stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .stat-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .chart-panel, .insight-panel {
+        margin-bottom: 1.5rem;
+    }
+    
+    .overview-actions {
+        padding: 1rem;
+    }
+    
+    .overview-actions .btn {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armenia Tourism: From Pandemic Recovery to Market Diversification</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding-top: 80px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #000064 0%, #1a1a7a 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Noto Sans Armenian', sans-serif;
+        }
+        
+        .hero-section .lead {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .story-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #dee2e6;
+            background-color: white;
+        }
+        
+        .story-section h2 {
+            color: #000064;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #000064;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+        
+        .stat-highlight {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 5px solid #000064;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #000064;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container.large {
+            height: 500px;
+        }
+        
+        .insight-box {
+            background: #e7f3ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #000064;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .risk-box {
+            background: #fff3cd;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .methodology {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #666;
+            margin: 20px 0;
+            border-left: 4px solid #6c757d;
+        }
+        
+        .navbar {
+            background-color: #000064 !important;
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            width: 100%;
+        }
+        
+        .navbar .navbar-brand,
+        .navbar .nav-link {
+            color: #ffffff !important;
+        }
+        
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus {
+            color: #cccccc !important;
+        }
+        
+        .navbar .nav-link.active {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+        
+        .navbar-logo {
+            height: 40px;
+            width: auto;
+        }
+        
+        .btn-primary {
+            background-color: #000064;
+            border-color: #000064;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: #000050;
+            border-color: #000050;
+        }
+        
+        .btn-outline-primary {
+            color: #000064;
+            border-color: #000064;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #000064;
+            border-color: #000064;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+        <div class="navbar-container container-fluid">
+            <div class="navbar-brand-container mx-auto">
+                <a href="https://teevial.com" class="navbar-brand navbar-brand-logo" target="_blank">
+                    <img src="./teevial.jpg" alt="Teevial" class="navbar-logo">
+                </a>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav navbar-nav-scroll me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./tourism-dashboard.html">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./data-story.html" aria-current="page">
+                            <span class="menu-text">Data Story</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contributors.html">
+                            <span class="menu-text">Contributors</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>Armenia Tourism: From Pandemic Recovery to Market Diversification</h1>
+            <p class="lead">A data-driven analysis of Armenia's tourism transformation from 2019 to 2024</p>
+            <p><em>How Armenia's tourism sector not only recovered from the pandemic but emerged stronger and more diversified</em></p>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="story-section">
+        <div class="container">
+            <h2>The Story in Numbers</h2>
+            <p>Armenia's tourism sector tells a remarkable tale of resilience and transformation. From the depths of the 2020 pandemic, when tourist arrivals plummeted to just 369,000, Armenia has not only recovered but exceeded pre-pandemic levels, reaching a peak of 2.32 million visitors in 2023—a staggering 39% year-over-year growth and 22% above 2019 levels.</p>
+            
+            <div class="stat-highlight">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">2.32M</div>
+                        <p>Peak arrivals in 2023</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">+39%</div>
+                        <p>YoY growth 2022-2023</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">+22%</div>
+                        <p>vs. pre-pandemic 2019</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>However, 2024 tells a different story—a story of stabilization and strategic diversification. Tourist arrivals dipped slightly to approximately 2.21-2.20 million, representing a 4.7% year-over-year decline. Yet this "plateau" is far from concerning; it represents a maturing market that has successfully maintained levels well above pre-pandemic benchmarks while beginning to address its most critical vulnerability: market concentration.</p>
+        </div>
+    </div>
+
+    <!-- Market Concentration Analysis -->
+    <div class="story-section">
+        <div class="container">
+            <h2>The Russian Factor: Concentration Risk and Opportunity</h2>
+            <p>Armenia's tourism success story is inextricably linked to one dominant market: Russia. In 2023, Russian visitors accounted for approximately 49-50% of all tourist arrivals—roughly 1.14 million visitors out of 2.32 million total. This concentration represents both Armenia's greatest strength and its most significant vulnerability.</p>
+            
+            <div class="chart-container">
+                <canvas id="marketShareChart"></canvas>
+            </div>
+            
+            <div class="insight-box">
+                <h4><i class="bi bi-lightbulb"></i> Market Concentration Analysis</h4>
+                <p>The Herfindahl-Hirschman Index (HHI) for Armenia's tourism market stands at approximately 0.28, indicating high concentration. While this concentration has driven rapid growth, it also creates significant risk exposure to Russian economic and political conditions.</p>
+            </div>
+            
+            <p>Georgia follows as the second-largest source market, contributing 11-12% of total arrivals (approximately 255,000 visitors), while Iran represents 6-8% (roughly 140,000 visitors). This concentration pattern has profound implications for Armenia's tourism resilience and strategic planning.</p>
+        </div>
+    </div>
+
+    <!-- 2024 Diversification Story -->
+    <div class="story-section">
+        <div class="container">
+            <h2>2024: The Year of Diversification</h2>
+            <p>The most encouraging development in Armenia's tourism narrative is the subtle but significant shift in 2024's market composition. While total arrivals experienced a modest decline, the underlying dynamics reveal a healthier, more diversified tourism ecosystem.</p>
+            
+            <div class="chart-container">
+                <canvas id="diversificationChart"></canvas>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="risk-box">
+                        <h5><i class="bi bi-exclamation-triangle"></i> Russian Market Adjustment</h5>
+                        <p>Russian arrivals fell by approximately 18% in 2024, reflecting both economic pressures and geopolitical realities. This decline, while significant, was not catastrophic—demonstrating the underlying strength of Armenia's tourism appeal.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="insight-box">
+                        <h5><i class="bi bi-arrow-up-circle"></i> Emerging Markets Growth</h5>
+                        <p>Iran and Georgia both showed robust growth in 2024, with Iran particularly strong due to improved visa policies and cultural exchange programs. This growth helped offset Russian declines and reduced overall market concentration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Economic Impact -->
+    <div class="story-section">
+        <div class="container">
+            <h2>The Economic Engine: Tourism Spending and Value Creation</h2>
+            <p>Armenia's tourism success extends far beyond visitor numbers. The sector has become a critical economic engine, generating substantial foreign exchange earnings and supporting thousands of jobs across the country.</p>
+            
+            <div class="stat-highlight">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">$3.0B</div>
+                        <p>Tourism receipts in 2023</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">$1,200</div>
+                        <p>Average spending per visitor</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="stat-number">15%</div>
+                        <p>of GDP (estimated)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container large">
+                <canvas id="spendingChart"></canvas>
+            </div>
+            
+            <div class="methodology">
+                <strong>Methodology Note:</strong> Tourism spending estimates vary by source. Our analysis shows approximately $2.6B in official receipts, while some sources report up to $3.0B. This range reflects different methodologies for measuring tourism economic impact, including direct spending, indirect effects, and informal sector activities.
+            </div>
+            
+            <p>Western European and American visitors demonstrate the highest per-capita spending, averaging $1,500-2,000 per trip, while regional visitors from Georgia and Iran typically spend $800-1,200. This spending pattern highlights the importance of attracting high-value markets for sustainable tourism growth.</p>
+        </div>
+    </div>
+
+    <!-- Seasonality Analysis -->
+    <div class="story-section">
+        <div class="container">
+            <h2>Seasonal Patterns: The Rhythm of Armenian Tourism</h2>
+            <p>Armenia's tourism follows a distinct seasonal pattern that reflects both climate considerations and cultural events. Understanding these patterns is crucial for infrastructure planning, workforce management, and marketing strategies.</p>
+            
+            <div class="chart-container large">
+                <canvas id="seasonalityChart"></canvas>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h5>Q1 (Jan-Mar)</h5>
+                        <p class="text-muted">Low season<br>~15% of annual arrivals</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h5>Q2 (Apr-Jun)</h5>
+                        <p class="text-muted">Rising season<br>~25% of annual arrivals</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h5>Q3 (Jul-Sep)</h5>
+                        <p class="text-muted">Peak season<br>~35% of annual arrivals</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <h5>Q4 (Oct-Dec)</h5>
+                        <p class="text-muted">High season<br>~25% of annual arrivals</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>Q3 (July-September) consistently emerges as the peak tourism period, driven by favorable weather, cultural festivals, and international events. This concentration creates both opportunities and challenges, requiring careful capacity management and pricing strategies.</p>
+        </div>
+    </div>
+
+    <!-- Regional Analysis -->
+    <div class="story-section">
+        <div class="container">
+            <h2>Regional Spending Patterns: Value vs. Volume</h2>
+            <p>Not all tourists are created equal in terms of economic impact. A sophisticated analysis of regional spending patterns reveals significant opportunities for market optimization and revenue enhancement.</p>
+            
+            <div class="chart-container">
+                <canvas id="regionalSpendingChart"></canvas>
+            </div>
+            
+            <div class="insight-box">
+                <h4><i class="bi bi-graph-up"></i> High-Value Market Opportunities</h4>
+                <p>Western European and North American visitors, while representing smaller volumes, generate disproportionately high economic value. Strategic marketing investments in these markets could yield significant returns on investment while reducing overall market concentration risk.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load data and create visualizations
+        async function loadDataAndCreateCharts() {
+            try {
+                // Load yearly data
+                const yearlyResponse = await fetch('./data/armenia_inbound_tourism_yearly_2019_2025.csv');
+                const yearlyText = await yearlyResponse.text();
+                const yearlyLines = yearlyText.trim().split('\n');
+                
+                // Parse yearly data
+                const yearlyData = {};
+                for (let i = 1; i < yearlyLines.length; i++) {
+                    const [year, country, tourists, spending] = yearlyLines[i].split(',');
+                    if (!yearlyData[year]) yearlyData[year] = {};
+                    yearlyData[year][country] = {
+                        tourists: parseInt(tourists),
+                        spending: parseFloat(spending)
+                    };
+                }
+                
+                // Load quarterly data
+                const quarterlyResponse = await fetch('./data/armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
+                const quarterlyText = await quarterlyResponse.text();
+                const quarterlyLines = quarterlyText.trim().split('\n');
+                
+                // Parse quarterly data
+                const quarterlyData = {};
+                for (let i = 1; i < quarterlyLines.length; i++) {
+                    const [quarter, country, tourists, spending] = quarterlyLines[i].split(',');
+                    if (!quarterlyData[quarter]) quarterlyData[quarter] = {};
+                    quarterlyData[quarter][country] = {
+                        tourists: parseInt(tourists),
+                        spending: parseFloat(spending)
+                    };
+                }
+                
+                // Create charts
+                createMarketShareChart(yearlyData);
+                createDiversificationChart(yearlyData);
+                createSpendingChart(yearlyData);
+                createSeasonalityChart(quarterlyData);
+                createRegionalSpendingChart(yearlyData);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        function createMarketShareChart(data) {
+            const ctx = document.getElementById('marketShareChart').getContext('2d');
+            const year2023 = data['2023'];
+            const topCountries = Object.entries(year2023)
+                .sort((a, b) => b[1].tourists - a[1].tourists)
+                .slice(0, 8);
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: topCountries.map(([country]) => country),
+                    datasets: [{
+                        data: topCountries.map(([, data]) => data.tourists),
+                        backgroundColor: [
+                            '#e74c3c', '#3498db', '#f39c12', '#2ecc71',
+                            '#9b59b6', '#1abc9c', '#34495e', '#95a5a6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Market Share by Country (2023)'
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createDiversificationChart(data) {
+            const ctx = document.getElementById('diversificationChart').getContext('2d');
+            const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+            const russiaData = years.map(year => data[year]?.Russia?.tourists || 0);
+            const georgiaData = years.map(year => data[year]?.Georgia?.tourists || 0);
+            const iranData = years.map(year => data[year]?.Iran?.tourists || 0);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Russia',
+                            data: russiaData,
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Georgia',
+                            data: georgiaData,
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Iran',
+                            data: iranData,
+                            borderColor: '#f39c12',
+                            backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tourist Arrivals by Top Countries (2019-2024)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000).toFixed(0) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createSpendingChart(data) {
+            const ctx = document.getElementById('spendingChart').getContext('2d');
+            const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+            const arrivalsData = years.map(year => {
+                const yearData = data[year];
+                return yearData ? Object.values(yearData).reduce((sum, country) => sum + country.tourists, 0) : 0;
+            });
+            const spendingData = years.map(year => {
+                const yearData = data[year];
+                return yearData ? Object.values(yearData).reduce((sum, country) => sum + country.spending, 0) / 1000000 : 0;
+            });
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'Tourist Arrivals (thousands)',
+                            data: arrivalsData.map(val => val / 1000),
+                            backgroundColor: 'rgba(52, 152, 219, 0.8)',
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Tourism Spending (USD millions)',
+                            data: spendingData,
+                            backgroundColor: 'rgba(46, 204, 113, 0.8)',
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tourist Arrivals vs. Tourism Spending (2019-2024)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Arrivals (thousands)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Spending (USD millions)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createSeasonalityChart(data) {
+            const ctx = document.getElementById('seasonalityChart').getContext('2d');
+            const quarters = ['2019-Q1', '2019-Q2', '2019-Q3', '2019-Q4', '2020-Q1', '2020-Q2', '2020-Q3', '2020-Q4', '2021-Q1', '2021-Q2', '2021-Q3', '2021-Q4', '2022-Q1', '2022-Q2', '2022-Q3', '2022-Q4', '2023-Q1', '2023-Q2', '2023-Q3', '2023-Q4', '2024-Q1', '2024-Q2', '2024-Q3'];
+            const totalArrivals = quarters.map(quarter => {
+                const quarterData = data[quarter];
+                return quarterData ? Object.values(quarterData).reduce((sum, country) => sum + country.tourists, 0) : 0;
+            });
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: quarters,
+                    datasets: [{
+                        label: 'Total Arrivals',
+                        data: totalArrivals,
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Quarterly Tourist Arrivals (2019-2024)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000).toFixed(0) + 'K';
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createRegionalSpendingChart(data) {
+            const ctx = document.getElementById('regionalSpendingChart').getContext('2d');
+            const year2023 = data['2023'];
+            const regions = [
+                { name: 'Western Europe', countries: ['Germany', 'France', 'United Kingdom', 'Italy', 'Spain', 'Netherlands', 'Switzerland', 'Austria', 'Belgium', 'Norway', 'Sweden', 'Denmark', 'Finland'] },
+                { name: 'North America', countries: ['United States', 'Canada'] },
+                { name: 'Post-Soviet', countries: ['Russia', 'Georgia', 'Kazakhstan', 'Belarus', 'Ukraine', 'Uzbekistan', 'Kyrgyzstan', 'Tajikistan'] },
+                { name: 'Middle East', countries: ['Iran', 'Israel', 'UAE', 'Qatar', 'Kuwait', 'Saudi Arabia', 'Iraq'] },
+                { name: 'Asia', countries: ['China', 'India', 'Japan', 'South Korea'] }
+            ];
+            
+            const regionData = regions.map(region => {
+                let totalTourists = 0;
+                let totalSpending = 0;
+                region.countries.forEach(country => {
+                    if (year2023[country]) {
+                        totalTourists += year2023[country].tourists;
+                        totalSpending += year2023[country].spending;
+                    }
+                });
+                return {
+                    name: region.name,
+                    tourists: totalTourists,
+                    spending: totalSpending,
+                    avgSpending: totalTourists > 0 ? totalSpending / totalTourists : 0
+                };
+            }).filter(region => region.tourists > 0);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: regionData.map(region => region.name),
+                    datasets: [{
+                        label: 'Average Spending per Visitor (USD)',
+                        data: regionData.map(region => region.avgSpending),
+                        backgroundColor: [
+                            '#e74c3c', '#3498db', '#f39c12', '#2ecc71', '#9b59b6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Average Spending per Visitor by Region (2023)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(0);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadDataAndCreateCharts);
+    </script>
+</body>
+</html>
