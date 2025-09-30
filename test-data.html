@@ -31,7 +31,7 @@
             
             try {
                 // Test quarterly data
-                const quarterlyResponse = await fetch('./armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
+                const quarterlyResponse = await fetch('./data/armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
                 if (quarterlyResponse.ok) {
                     const quarterlyText = await quarterlyResponse.text();
                     const quarterlyLines = quarterlyText.trim().split('\n');
@@ -52,7 +52,7 @@
                 }
                 
                 // Test yearly data
-                const yearlyResponse = await fetch('./armenia_inbound_tourism_yearly_2019_2025.csv');
+                const yearlyResponse = await fetch('./data/armenia_inbound_tourism_yearly_2019_2025.csv');
                 if (yearlyResponse.ok) {
                     const yearlyText = await yearlyResponse.text();
                     const yearlyLines = yearlyText.trim().split('\n');

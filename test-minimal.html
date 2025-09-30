@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minimal Dashboard Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #map { height: 500px; width: 100%; border: 1px solid #ccc; }
+        .controls { margin: 20px 0; }
+        .stat { margin: 10px 0; padding: 10px; background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <h1>Minimal Dashboard Test</h1>
+    
+    <div class="controls">
+        <label>Year: </label>
+        <select id="yearSelect">
+            <option value="2024" selected>2024</option>
+            <option value="2023">2023</option>
+        </select>
+        
+        <label>Period: </label>
+        <select id="quarterSelect">
+            <option value="ALL" selected>Whole Year</option>
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+        </select>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div class="stat">
+        <strong>Total Tourists:</strong> <span id="totalVisitors">Loading...</span>
+    </div>
+    
+    <div class="stat">
+        <strong>Top Countries:</strong> <span id="topCountriesList">Loading...</span>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Global variables
+        let map;
+        let currentYear = '2024';
+        let currentQuarter = 'ALL';
+        let tourismData = {};
+        let yearlyTourismData = {};
+        
+        // Sample data
+        function loadSampleData() {
+            console.log('Loading sample data...');
+            tourismData = {
+                '2024': {
+                    'Q1': {
+                        'Russia': { tourists: 143965, spending: 149005804.2, coordinates: [55.7558, 37.6176] },
+                        'Georgia': { tourists: 56457, spending: 35631179.05, coordinates: [41.7151, 44.8271] },
+                        'Iran': { tourists: 39520, spending: 31594190.7, coordinates: [35.6892, 51.3890] }
+                    },
+                    'Q2': {
+                        'Russia': { tourists: 165000, spending: 170000000, coordinates: [55.7558, 37.6176] },
+                        'Georgia': { tourists: 65000, spending: 41000000, coordinates: [41.7151, 44.8271] },
+                        'Iran': { tourists: 45000, spending: 36000000, coordinates: [35.6892, 51.3890] }
+                    }
+                }
+            };
+            
+            yearlyTourismData = {
+                '2024': {
+                    'Russia': { tourists: 308965, spending: 319005804.2 },
+                    'Georgia': { tourists: 121457, spending: 76631179.05 },
+                    'Iran': { tourists: 84520, spending: 67594190.7 }
+                }
+            };
+        }
+        
+        function getCurrentPeriodData() {
+            if (currentQuarter === 'ALL') {
+                return yearlyTourismData[currentYear] || {};
+            } else {
+                return tourismData[currentYear]?.[currentQuarter] || {};
+            }
+        }
+        
+        function initMap() {
+            console.log('Initializing map...');
+            map = L.map('map').setView([45, 25], 3);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            console.log('Map initialized');
+        }
+        
+        function updateMapData() {
+            console.log('Updating map data...');
+            const periodData = getCurrentPeriodData();
+            console.log('Period data:', periodData);
+            
+            if (!periodData || Object.keys(periodData).length === 0) {
+                console.log('No data available');
+                return;
+            }
+            
+            // Clear existing markers
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+            
+            // Add markers for each country
+            Object.keys(periodData).forEach(country => {
+                const data = periodData[country];
+                if (data.coordinates) {
+                    L.marker(data.coordinates).addTo(map)
+                        .bindPopup(`<strong>${country}</strong><br>Tourists: ${data.tourists.toLocaleString()}`);
+                }
+            });
+        }
+        
+        function updateStatistics() {
+            console.log('Updating statistics...');
+            const periodData = getCurrentPeriodData();
+            
+            if (!periodData || Object.keys(periodData).length === 0) {
+                document.getElementById('totalVisitors').textContent = 'No data available';
+                document.getElementById('topCountriesList').textContent = 'No data available';
+                return;
+            }
+            
+            const totalTourists = Object.values(periodData).reduce((sum, country) => sum + country.tourists, 0);
+            document.getElementById('totalVisitors').textContent = totalTourists.toLocaleString();
+            
+            const topCountries = Object.keys(periodData)
+                .sort((a, b) => periodData[b].tourists - periodData[a].tourists)
+                .slice(0, 3)
+                .map(country => `${country}: ${periodData[country].tourists.toLocaleString()}`)
+                .join(', ');
+            
+            document.getElementById('topCountriesList').textContent = topCountries;
+        }
+        
+        function handleControlChange() {
+            currentYear = document.getElementById('yearSelect').value;
+            currentQuarter = document.getElementById('quarterSelect').value;
+            console.log('Controls changed:', currentYear, currentQuarter);
+            updateMapData();
+            updateStatistics();
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            
+            loadSampleData();
+            initMap();
+            updateMapData();
+            updateStatistics();
+            
+            // Add event listeners
+            document.getElementById('yearSelect').addEventListener('change', handleControlChange);
+            document.getElementById('quarterSelect').addEventListener('change', handleControlChange);
+            
+            console.log('Initialization complete');
+        });
+    </script>
+</body>
+</html>

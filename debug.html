@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 400px; width: 100%; }
+        body { font-family: Arial, sans-serif; padding: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Dashboard</h1>
+    <div id="map"></div>
+    <div id="debug"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        console.log('Debug script starting...');
+        
+        // Test map initialization
+        try {
+            const map = L.map('map').setView([40.1792, 44.4991], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            console.log('Map created successfully');
+            
+            // Test sample data
+            const sampleData = {
+                '2024': {
+                    'Q1': {
+                        'Russia': { tourists: 143965, spending: 149005804.2, coordinates: [55.7558, 37.6176] },
+                        'Georgia': { tourists: 56457, spending: 35631179.05, coordinates: [41.7151, 44.8271] }
+                    }
+                }
+            };
+            
+            console.log('Sample data:', sampleData);
+            
+            // Add markers
+            Object.keys(sampleData['2024']['Q1']).forEach(country => {
+                const data = sampleData['2024']['Q1'][country];
+                L.marker(data.coordinates).addTo(map)
+                    .bindPopup(`<strong>${country}</strong><br>Tourists: ${data.tourists.toLocaleString()}<br>Spending: $${data.spending.toLocaleString()}`);
+            });
+            
+            document.getElementById('debug').innerHTML = '<p style="color: green;">✅ Dashboard loaded successfully!</p>';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('debug').innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+        }
+    </script>
+</body>
+</html>

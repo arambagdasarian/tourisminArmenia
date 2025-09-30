@@ -79,7 +79,6 @@
                     <div class="col-md-2">
                         <label for="yearSelect" class="form-label">Year</label>
                         <select class="form-select" id="yearSelect">
-                            <option value="2025">2025</option>
                             <option value="2024" selected>2024</option>
                             <option value="2023">2023</option>
                             <option value="2022">2022</option>
@@ -376,29 +375,29 @@
             <div class="insights-section mt-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="insight-card">
+                        <div class="insight-card" id="leadingMarketsCard">
                             <h5><i class="bi bi-trophy"></i> Leading Source Markets</h5>
-                            <p>Russia dominates Armenia's inbound tourism with over 700k yearly visitors, followed by Georgia and Iran. Russia accounts for approximately 35% of all tourist arrivals.</p>
+                            <p id="leadingMarketsText">Loading...</p>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar" id="leadingMarketsProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="insight-card">
+                        <div class="insight-card" id="recoveryCard">
                             <h5><i class="bi bi-graph-up-arrow"></i> Tourism Recovery</h5>
-                            <p>After the 2020 pandemic low of 369k tourists, Armenia has shown strong recovery, peaking at 2.29M visitors in 2023 - exceeding pre-pandemic levels.</p>
+                            <p id="recoveryText">Loading...</p>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" id="recoveryProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="insight-card">
+                        <div class="insight-card" id="economicImpactCard">
                             <h5><i class="bi bi-currency-dollar"></i> Economic Impact</h5>
-                            <p>Tourism spending reached $2.6B in 2023, with average spending of $1,140 per tourist. Western European and American visitors show highest per-capita spending.</p>
+                            <p id="economicImpactText">Loading...</p>
                             <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-warning" id="economicImpactProgress" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
@@ -575,6 +574,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="tourism-dashboard.js"></script>
+    <script src="tourism-dashboard.js?v=2"></script>
 </body>
 </html>
