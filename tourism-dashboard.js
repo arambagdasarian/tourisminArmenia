@@ -75,8 +75,16 @@ const countryCoordinates = {
 // Load and parse quarterly CSV data
 async function loadQuarterlyData() {
     try {
-        const response = await fetch('./armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
+        console.log('📊 Loading quarterly data from CSV...');
+        const response = await fetch('armenia_inbound_tourism_by_country_quarter_2019q1_2025q3.csv');
+        console.log('📊 CSV response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const csvText = await response.text();
+        console.log('📊 CSV text length:', csvText.length);
         
         const lines = csvText.trim().split('\n');
         const headers = lines[0].split(',');
@@ -125,8 +133,16 @@ async function loadQuarterlyData() {
 // Load and parse yearly CSV data
 async function loadYearlyData() {
     try {
-        const response = await fetch('./armenia_inbound_tourism_yearly_2019_2025.csv');
+        console.log('📊 Loading yearly data from CSV...');
+        const response = await fetch('armenia_inbound_tourism_yearly_2019_2025.csv');
+        console.log('📊 Yearly CSV response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const csvText = await response.text();
+        console.log('📊 Yearly CSV text length:', csvText.length);
         
         const lines = csvText.trim().split('\n');
         const headers = lines[0].split(',');
@@ -176,20 +192,20 @@ async function loadTourismData() {
             // Both datasets loaded successfully
             console.log('✅ Both datasets loaded successfully - Quarterly years:', Object.keys(tourismData).length, 'Yearly years:', Object.keys(yearlyTourismData).length);
             
-            // Trigger initial update
-            setTimeout(() => {
-                console.log('🚀 Initializing dashboard with:', currentYear, currentQuarter, currentMetric, currentView);
-                updateMapData();
-                updateStatistics();
-                
-                // Ensure map is properly sized
+            // Initialize dashboard immediately
+            console.log('🚀 Initializing dashboard with:', currentYear, currentQuarter, currentMetric, currentView);
+            updateMapData();
+            updateStatistics();
+            
+            // Ensure map is properly sized
+            if (map) {
                 setTimeout(() => {
-                    if (map) {
-                        map.invalidateSize();
-                        console.log('✅ Map resized');
-                    }
-                }, 500);
-            }, 100);
+                    map.invalidateSize();
+                    console.log('✅ Map resized');
+                }, 100);
+            }
+            
+            return true;
         } else {
             throw new Error('Failed to load one or both datasets');
         }
@@ -198,6 +214,7 @@ async function loadTourismData() {
         console.log('🔄 Falling back to sample data');
         // Fallback to sample data if CSV loading fails
         loadSampleData();
+        return false;
     }
 }
 
@@ -226,6 +243,7 @@ function parseCSVLine(line) {
 
 // Fallback sample data
 function loadSampleData() {
+    console.log('📊 Loading sample data as fallback...');
     tourismData = {
         '2024': {
             'Q1': {
@@ -237,6 +255,23 @@ function loadSampleData() {
             }
         }
     };
+    
+    // Create yearly sample data
+    yearlyTourismData = {
+        '2024': {
+            'Russia': { tourists: 575860, spending: 596023216.8 },
+            'Georgia': { tourists: 225828, spending: 142524716.2 },
+            'Iran': { tourists: 158080, spending: 126376762.8 },
+            'United States': { tourists: 64668, spending: 101376966.84 },
+            'Germany': { tourists: 43112, spending: 59233503.76 }
+        }
+    };
+    
+    console.log('✅ Sample data loaded');
+    
+    // Initialize dashboard with sample data
+    updateMapData();
+    updateStatistics();
 }
 
 // Region names in Armenian and English
@@ -278,9 +313,6 @@ function initMap() {
 
         // Map initialized successfully
         console.log('✅ Map initialization complete');
-        
-        // Load CSV data
-        loadTourismData();
     } catch (error) {
         console.error('❌ Error initializing map:', error);
     }
@@ -765,6 +797,29 @@ function showNoDataMessage() {
     
     const noDataMarker = L.marker([45, 25], { icon: noDataDiv }).addTo(map);
     countryLayers['nodata'] = { marker: noDataMarker };
+}
+
+function showErrorMessage(message) {
+    console.error('🚨 Showing error message:', message);
+    
+    // Create error banner
+    const errorBanner = document.createElement('div');
+    errorBanner.className = 'alert alert-danger alert-dismissible fade show';
+    errorBanner.style.cssText = 'position: fixed; top: 20px; left: 20px; right: 20px; z-index: 9999;';
+    errorBanner.innerHTML = `
+        <i class="bi bi-exclamation-triangle"></i>
+        <strong>Error:</strong> ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(errorBanner);
+    
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => {
+        if (errorBanner.parentNode) {
+            errorBanner.remove();
+        }
+    }, 10000);
 }
 
 // Add missing functions for popup interactions
@@ -2538,11 +2593,24 @@ function handleControlChange() {
 }
 
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM loaded, initializing dashboard
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('🚀 DOM loaded, starting initialization...');
     
-    // Initialize map
+    try {
+        // Initialize map first
     initMap();
+        
+        // Wait for map to be ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Load all data before proceeding
+        await loadTourismData();
+        
+        console.log('✅ Dashboard initialization complete');
+    } catch (error) {
+        console.error('❌ Dashboard initialization failed:', error);
+        showErrorMessage('Failed to initialize dashboard. Please refresh the page.');
+    }
     
     // Add event listeners with error checking (optimized)
     const addEventListenerSafely = (id, event, handler) => {
